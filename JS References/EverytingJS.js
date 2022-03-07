@@ -90,4 +90,33 @@ console.log(num);
 console.log(num2);
 console.log(num3);
 
+//----Concantination String Shortuts----
+let mySentance = "this is sentance 1";
+//A short cut for concantinating strings is
+mySentance += ". this is sentance 2.";
+console.log(mySentance);
+
+//you can also append Strings with variables
+let adjective = "cool";
+let myStr = "Vincent is ";
+
+myStr += adjective;
+console.log(myStr);
+
+//----Bracket Notation----
+//This is used for getting a character at a specific index of a string
+const name = "vinny";
+console.log(name[0]); //returns the first character of the string
+
+//----Word Blanks----
+//adlib type game with the function wordBlanks
+function wordBlanks(myNoun, myAdjective, myVerb, myAdverb) {
+    var result = "";
+
+    result += myAdjective + myNoun + myVerb + myAdverb;
+
+    return result;
+}
+
+console.log(wordBlanks("dog ", "big ", "ran ", "quickly "));
 

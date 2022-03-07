@@ -73,4 +73,21 @@ example: */
 const modulo = 10 % 43; //modulo is expressed with %
 console.log(modulo);
 
+//----Augmented Math Operators----
+let num = 6;
+let num2 = 6;
+let num3 = 6;
+
+//instead of doing 
+num = num + 6;
+num2 = num2 * 6;
+num3 = num3 / 6;
+//JS allows for shortcuts like this
+num += 6;
+num2 *= 6;
+num3 -= 6;
+console.log(num);
+console.log(num2);
+console.log(num3);
+
 

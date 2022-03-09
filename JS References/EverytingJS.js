@@ -141,4 +141,39 @@ mArray[0][1] = 0;
 console.log(array)
 console.log(mArray)
 
+//you can have pinned data to the end of an array with the push function
+let anArray = ["word","word2","word3"];
+anArray.push(["word4","word5"]);
 
+console.log(anArray);
+
+//unshift adds an element to the beggining of an array
+anArray.unshift("word6");
+console.log(anArray);
+
+//you can remove an item from an array with the pop function
+let someArray = [1,2,3,4];
+//pop() removes the last element of the array and returns it, that can then be stored in a variable
+const popValue = someArray.pop();
+console.log(popValue);
+console.log(someArray);
+
+//the shift() function is similar to the pop function except it removes the first element of an array
+const shitValue = someArray.shift();
+console.log(shitValue);
+console.log(someArray);
+
+//----functions----
+//this is an example of a function in JS
+function exampleFunction() {
+    console.log("this is a function");
+}
+// the function then can be called later
+exampleFunction();
+
+//functions can also take in parameters 
+function exParameters(a, b){
+    console.log(a-b);
+}
+
+exParameters(1,2);

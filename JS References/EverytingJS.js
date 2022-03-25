@@ -175,5 +175,35 @@ exampleFunction();
 function exParameters(a, b){
     console.log(a-b);
 }
-
 exParameters(1,2);
+//if you do not specify a return value the function is undefinded
+let value = 2;
+function unDefinded(){
+    value += 5;
+}
+console.log(unDefinded());
+
+
+//----Global Scope----
+//Scope referes to the visibillity of variables
+//Variables defined outside of a function block have global scope and can be used everywhere
+let myGlobal = "global";
+//we can then access this in anything within this script
+function returnGlobal(){
+    myGlobal = "Ive Changed!"
+    console.log(myGlobal);
+}
+returnGlobal();
+//if we define a variable in a function but do not add a type to it, it will automatically become global
+function globalExample(){
+    noType = "Im Global too!";
+    //this variable would only be available in this function since it is typed meaning it is local scope
+    let type = "im not global";
+}
+//we can then access the noType variable in this next function here
+function globalExample2(){
+    noType = "Ive changed in this function!"
+    console.log(noType);
+    
+}
+globalExample2();

@@ -115,13 +115,13 @@ class Invader {
                       this.width, 
                       this.height);
     }
-    //create update method for updating where invader is when moving
-    update(){
+    //create update method for updating where invader is when moving that takes in a velecity
+    update({velocity}){
         //if image loads
         if(this.image){
             this.draw();
-            this.position.x += this.velocity.x;
-            this.position.y += this.velocity.y;
+            this.position.x += velocity.x;
+            this.position.y += velocity.y;
         }
     }
 }
@@ -134,31 +134,44 @@ class Grid {
             y: 0
         };
         this.velocity = {
-            x:0,
+            x:3,
             y:0
         };
         //whenever this class is instantiated we create a new array of the invader class/object
         this.invaders = [];
-
+        //create random value for dynamic rows/colums of invaders 
+        const rows = Math.floor(Math.random() * 5 + 2);
+        const columns = Math.floor(Math.random() * 10 + 5);
+        //declare width
+        this.width = columns * 35;
         //create rows and columns of invaders
-        for (let x = 0; x < 10; x++){ //create 10 
-        for (let y = 0; y < 10; y++){
+        for (let x = 0; x < columns; x++){ //create 2-7 rows and 5-10 columns
+        for (let y = 0; y < rows; y++){
             this.invaders.push(new Invader({position:{
-                x: x * 30,//multiply iterator by 30 to space out each invader 
-                y: y * 30
+                x: x * 35,//multiply iterator by 35 to space out each invader 
+                y: y * 35
             }}));
         }
     }
 }
-
-    update(){ }
+    //function for updating invader positions
+    update(){ 
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+        this.velocity.y = 0; //set velocity to 0 so invaders do not go off screen when hitting a side
+        //prevent invaders from moving off screen
+        if(this.position.x + this.width >= canvas.width || this.position.x <= 0){
+            this.velocity.x = -this.velocity.x;
+            this.velocity.y = 35;
+        }
+    }
 }
 //create our player now that class is finshed
 const player = new Player();
 //create projectiles array
 const projectiles = [];
 //create our grid class
-const grids = [new Grid()];
+const grids = [];
 new Projectile({
     position:{
         x: 300,
@@ -188,6 +201,10 @@ const keys = {
         pressed: false
     }
 };
+//create frames variable to spawn grids at intervals
+let frames = 0;
+//create random interval to spawn invaders at random intervals
+let randomInterval = Math.floor((Math.random()*500) + 500);
 //create animation loop so spaceship image can be loaded
 function animate() {
     window.requestAnimationFrame(animate);
@@ -207,10 +224,10 @@ function animate() {
             projectile.update();
         }
     });
-    grids.forEach(grid => {
+    grids.forEach((grid) => {
         grid.update();
         grid.invaders.forEach(invader => {
-            invader.update();
+            invader.update({ velocity: grid.velocity})
         })
     })
     //if key is pressed
@@ -224,6 +241,15 @@ function animate() {
         player.velocity.x = 0;
         player.rotation = 0;
     }
+    //spawning enemies
+    //when frames reaches 1000
+    if(frames % randomInterval ===0){
+        grids.push(new Grid());
+        //get a new interval
+        randomInterval = Math.floor((Math.random()*500) + 500);
+        frames = 0; //reset frames counter
+    }
+    frames++;//+1 to frames
 }
 animate();
 //add keydown event listener for player movement
@@ -260,15 +286,12 @@ addEventListener('keyup', ({key}) =>{
     //create switch block to create controls
     switch(key){
         case 'a':
-            console.log('left');
             keys.a.pressed = false;
             break;
         case 'd':
-            console.log('right');
             keys.d.pressed = false;
             break;
         case ' ': //spacebar
-            console.log('shooting');
             keys.space.pressed = false;
             break;
     }
